@@ -1,0 +1,562 @@
+Create a UI for document configuration and channel which will be using the documents with some tweaking
+The UI will have 2 different pages 
+1st page for onboarding a new document which will get all the details mentioned below in save doc POST call
+2nd page for onboarding of new channel which will get all documents and channel can pick which document it want to use
+
+Apart from this it will also have UI which will show all the documents, all the channels, single document and single channel
+
+The request and responses are provided below
+
+Save doc 
+POST call  http://localhost:8080/config/document
+request
+{
+    "documents": {
+        "AADHAAR": {
+            "operations": {
+                "CLASSIFICATION": {
+                   "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                   "systemPrompt": "You are expert Indian financial document classifier. Your role is to classify the given document into exactly one of the following categories in JSON format.\\nAssign a confidence score between 0 and 100 based on your certainty of the classification. A score of 100 represents absolute certainty, while 0 represents no confidence.\\nHere are the document categories with their descriptions to help in classification:\\n",
+                    "fields": null,
+                    "apis": null
+                },
+                "VERIFICATION": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "systemPrompt": "You are expert Indian financial document classifier. Your role is to classify the given document into exactly one of the following categories in JSON format.\\nAssign a confidence score between 0 and 100 based on your certainty of the classification. A score of 100 represents absolute certainty, while 0 represents no confidence.\\nHere are the document categories with their descriptions to help in classification:\\n",
+                    "fields": null,
+                    "apis": null
+                },
+                "SEARCH": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "systemPrompt": "You are expert Indian financial document classifier. Your role is to classify the given document into exactly one of the following categories in JSON format.\\nAssign a confidence score between 0 and 100 based on your certainty of the classification. A score of 100 represents absolute certainty, while 0 represents no confidence.\\nHere are the document categories with their descriptions to help in classification:\\n",
+                    "fields": {
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": null
+                        }
+                    },
+                    "apis": null
+                },
+                "EXTRACTION": {
+                    "userPrompt": "{% if name is not null %}    * **name: The full name of the cardholder. Do not extract the name from the address section. It should not be prefixed with S/O, D/O, W/O, H/O, or C/O, etc. (For example, if the text is \"S/O Karthik Kumar,\" \"Karthik Kumar\" is not the name of the cardholder.)\\n{% endif %}{% if dateOfBirth is not null %}    * **dateOfBirth: The date of birth of the cardholder in the format DD/MM/YYYY or YYYY.\\n{% endif %}{% if gender is not null %}    * **gender: The gender of the cardholder (e.g., Male, Female, or Transgender).\\n{% endif %}{% if redactedAadhaarNo is not null %}    * **redactedAadhaarNo: The last 4 digits of the Aadhaar number after redaction (Example: 4353). If the Aadhaar number was not redacted, then all 12 digits will be visible; in this case, capture the last 4 digits. Note that there will be a VID number (the font of the VID number is slightly smaller) below the Aadhaar number (the font of the Aadhaar number is slightly bigger). So, do not capture the VID number; extract the Aadhaar number.\\n{% endif %}{% if address is not null %}    * **address: The complete address of the cardholder as it appears on the card. There might be two addresses specified on the Aadhaar card: addressFront (usually appears before addressback) from the front side of the Aadhaar card and addressback (usually appears after addressFront) from the back side of the Aadhaar card. If both addresses are present, extract addressBack, ignoring addressFront. Include all available details like house number, street, locality, city/town/village, district, state, PIN code, and VTC. Give every detail exactly in the same order, line by line. It usually starts with S/O, D/O, W/O, H/O, or C/O and ends with a 6-digit PIN code. Ensure no lines/words are missing in between the address. If the address starts with the word \"Address,\" remove it. If addressFront is captured, ensure the name is not captured. A 10-digit mobile number should not be part of the address.\\n {% endif %}{% if mobileNo is not null %}   * **mobileNo: Find the mobile number just in the next line to the 6-digit PIN code number. Example: 9845341145. Note that it is a 10-digit number without any spaces. Find it near the upper address region or below the gender. Do not confuse it with the VID number. It will definitely not be present below the Aadhaar number. It will never be present below the Aadhaar number or prefixed with VID.\\n{% endif %}5. If a particular piece of information is not present or cannot be clearly identified in the image, mark it as null.",
+                    "systemPrompt": "You are an intelligent document processing system. Your task is to extract specific information from the provided image of an Aadhaar card (front or back).\\nInstructions:\\n1. Carefully analyze the text in the image.\\n2. Ignore all handwritten details in the image.\\n3. Extract details which are only in the English language.\\n4. Identify and extract the following information, assigning a confidence score between 0 (no confidence) and 100 (absolute certainty) to each extracted key:\\n",
+                    "fields": {
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": [
+                                {
+                                    "key": "MIN_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "MAX_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "name": {
+                            "name": "name",
+                            "description": "Name on Aadhaar Card",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "NAME_MATCH",
+                                "EQUALS"
+                            ]
+                        },
+                        "address": {
+                            "name": "address",
+                            "description": "This is address",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "ADDRESS_MATCH"
+                            ]
+                        },
+                         "gender": {
+                            "name": "gender",
+                            "description": "This is gender",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                         "dateOfBirth": {
+                            "name": "dateOfBirth",
+                            "description": "This is dateOfBirth",
+                            "dataType": "DATE",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d{1,2}/\\\\d{1,2}/\\\\d{2,4}
+                                }
+                            ],
+                            "comparisonValidation":[]
+                        },
+                        "mobileNo": {
+                            "name": "mobileNo",
+                            "description": "Registered Mobile number of the person",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{10}$"
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        }
+                        
+                    },
+                    "apis": [
+                        "aadhaarValidator"
+                    ]
+                }
+            }
+        }
+    }
+}
+
+Response:
+
+{
+    "message": "Document config saved"
+}
+
+
+Get all document 
+GET call - http://localhost:8080/config/documents
+
+Response:
+{
+    "documents": {
+        "AADHAAR": {
+            "operations": {
+                "EXTRACTION": {
+                    "userPrompt": "{% if name is not null %}    * **name: The full name of the cardholder. Do not extract the name from the address section. It should not be prefixed with S/O, D/O, W/O, H/O, or C/O, etc. (For example, if the text is \"S/O Karthik Kumar,\" \"Karthik Kumar\" is not the name of the cardholder.)\\n{% endif %}{% if dateOfBirth is not null %}    * **dateOfBirth: The date of birth of the cardholder in the format DD/MM/YYYY or YYYY.\\n{% endif %}{% if gender is not null %}    * **gender: The gender of the cardholder (e.g., Male, Female, or Transgender).\\n{% endif %}{% if redactedAadhaarNo is not null %}    * **redactedAadhaarNo: The last 4 digits of the Aadhaar number after redaction (Example: 4353). If the Aadhaar number was not redacted, then all 12 digits will be visible; in this case, capture the last 4 digits. Note that there will be a VID number (the font of the VID number is slightly smaller) below the Aadhaar number (the font of the Aadhaar number is slightly bigger). So, do not capture the VID number; extract the Aadhaar number.\\n{% endif %}{% if address is not null %}    * **address: The complete address of the cardholder as it appears on the card. There might be two addresses specified on the Aadhaar card: addressFront (usually appears before addressback) from the front side of the Aadhaar card and addressback (usually appears after addressFront) from the back side of the Aadhaar card. If both addresses are present, extract addressBack, ignoring addressFront. Include all available details like house number, street, locality, city/town/village, district, state, PIN code, and VTC. Give every detail exactly in the same order, line by line. It usually starts with S/O, D/O, W/O, H/O, or C/O and ends with a 6-digit PIN code. Ensure no lines/words are missing in between the address. If the address starts with the word \"Address,\" remove it. If addressFront is captured, ensure the name is not captured. A 10-digit mobile number should not be part of the address.\\n {% endif %}{% if mobileNo is not null %}   * **mobileNo: Find the mobile number just in the next line to the 6-digit PIN code number. Example: 9845341145. Note that it is a 10-digit number without any spaces. Find it near the upper address region or below the gender. Do not confuse it with the VID number. It will definitely not be present below the Aadhaar number. It will never be present below the Aadhaar number or prefixed with VID.\\n{% endif %}5. If a particular piece of information is not present or cannot be clearly identified in the image, mark it as null.",
+                    "fields": {
+                        "address": {
+                            "name": "address",
+                            "description": "This is address",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "ADDRESS_MATCH"
+                            ]
+                        },
+                        "gender": {
+                            "name": "gender",
+                            "description": "This is gender",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "name": {
+                            "name": "name",
+                            "description": "Name on Aadhaar Card",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "NAME_MATCH",
+                                "EQUALS"
+                            ]
+                        },
+                        "dateOfBirth": {
+                            "name": "dateOfBirth",
+                            "description": "This is dateOfBirth",
+                            "dataType": "DATE",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d{1,2}/\\\\d{1,2}/\\\\d{2,4}
+                                }
+                            ],
+                            "comparisonValidation": []
+                        },
+                        "mobileNo": {
+                            "name": "mobileNo",
+                            "description": "Registered Mobile number of the person",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{10}$"
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": [
+                                {
+                                    "key": "MIN_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "MAX_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        }
+                    },
+                    "apis": [
+                        "aadhaarValidator"
+                    ]
+                },
+                "SEARCH": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": [],
+                            "comparisonValidation": []
+                        }
+                    },
+                    "apis": []
+                },
+                "CLASSIFICATION": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {},
+                    "apis": []
+                },
+                "VERIFICATION": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {},
+                    "apis": []
+                }
+            }
+        }
+    }
+}
+
+GET single document
+GET call - http://localhost:8080/config/documents/AADHAAR  , where AADHAAR is document name
+Response:
+{
+    "documents": {
+        "AADHAAR": {
+            "operations": {
+                "EXTRACTION": {
+                    "userPrompt": "{% if name is not null %}    * **name: The full name of the cardholder. Do not extract the name from the address section. It should not be prefixed with S/O, D/O, W/O, H/O, or C/O, etc. (For example, if the text is \"S/O Karthik Kumar,\" \"Karthik Kumar\" is not the name of the cardholder.)\\n{% endif %}{% if dateOfBirth is not null %}    * **dateOfBirth: The date of birth of the cardholder in the format DD/MM/YYYY or YYYY.\\n{% endif %}{% if gender is not null %}    * **gender: The gender of the cardholder (e.g., Male, Female, or Transgender).\\n{% endif %}{% if redactedAadhaarNo is not null %}    * **redactedAadhaarNo: The last 4 digits of the Aadhaar number after redaction (Example: 4353). If the Aadhaar number was not redacted, then all 12 digits will be visible; in this case, capture the last 4 digits. Note that there will be a VID number (the font of the VID number is slightly smaller) below the Aadhaar number (the font of the Aadhaar number is slightly bigger). So, do not capture the VID number; extract the Aadhaar number.\\n{% endif %}{% if address is not null %}    * **address: The complete address of the cardholder as it appears on the card. There might be two addresses specified on the Aadhaar card: addressFront (usually appears before addressback) from the front side of the Aadhaar card and addressback (usually appears after addressFront) from the back side of the Aadhaar card. If both addresses are present, extract addressBack, ignoring addressFront. Include all available details like house number, street, locality, city/town/village, district, state, PIN code, and VTC. Give every detail exactly in the same order, line by line. It usually starts with S/O, D/O, W/O, H/O, or C/O and ends with a 6-digit PIN code. Ensure no lines/words are missing in between the address. If the address starts with the word \"Address,\" remove it. If addressFront is captured, ensure the name is not captured. A 10-digit mobile number should not be part of the address.\\n {% endif %}{% if mobileNo is not null %}   * **mobileNo: Find the mobile number just in the next line to the 6-digit PIN code number. Example: 9845341145. Note that it is a 10-digit number without any spaces. Find it near the upper address region or below the gender. Do not confuse it with the VID number. It will definitely not be present below the Aadhaar number. It will never be present below the Aadhaar number or prefixed with VID.\\n{% endif %}5. If a particular piece of information is not present or cannot be clearly identified in the image, mark it as null.",
+                    "fields": {
+                        "address": {
+                            "name": "address",
+                            "description": "This is address",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "ADDRESS_MATCH"
+                            ]
+                        },
+                        "gender": {
+                            "name": "gender",
+                            "description": "This is gender",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "name": {
+                            "name": "name",
+                            "description": "Name on Aadhaar Card",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\s
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "NAME_MATCH",
+                                "EQUALS"
+                            ]
+                        },
+                        "dateOfBirth": {
+                            "name": "dateOfBirth",
+                            "description": "This is dateOfBirth",
+                            "dataType": "DATE",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d{1,2}/\\\\d{1,2}/\\\\d{2,4}
+                                }
+                            ],
+                            "comparisonValidation": []
+                        },
+                        "mobileNo": {
+                            "name": "mobileNo",
+                            "description": "Registered Mobile number of the person",
+                            "dataType": "STRING",
+                            "fieldValidation": [
+                                {
+                                    "key": "REGEX",
+                                    "value": "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{10}$"
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": [
+                                {
+                                    "key": "MIN_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "MAX_LENGTH",
+                                    "value": "4"
+                                },
+                                {
+                                    "key": "REGEX",
+                                    "value": \\\\d
+                                }
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        }
+                    },
+                    "apis": [
+                        "aadhaarValidator"
+                    ]
+                },
+                "SEARCH": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {
+                        "redactedAadhaarNo": {
+                            "name": "redactedAadhaarNo",
+                            "description": "The last 4 digits of the Aadhaar number after redaction",
+                            "dataType": "INTEGER",
+                            "fieldValidation": [],
+                            "comparisonValidation": []
+                        }
+                    },
+                    "apis": []
+                },
+                "CLASSIFICATION": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {},
+                    "apis": []
+                },
+                "VERIFICATION": {
+                    "userPrompt": "{% if passport is not null %}- passport : \"Indian passport. Contains details like republic of india, surname, given name, passport number, place of issue, Name of father, Name of mother, File No, etc.\",{% endif %}{% if drivinglicense is not null %}\\n- drivinglicense : \"Indian driving license/licence\",{% endif %}{% if voterid is not null %}\\n- voterid: \"Indian voter ID card. Look for the 'Election Commission of India' logo, the term 'Identity Card', and fields like 'Elector's Name', 'Father's/Husband's Name', and address.\"{% endif %}{% if bankstatement is not null %}\\n- bankstatement: \"Indian bank statement. Look for a bank's logo and name, account holder's information, account number, transaction details (date, description, debit, credit, balance), and statement period.\"{% endif %}{% if salaryslip is not null %}\\n- salaryslip: \"Salary slip from an Indian employer. Look for the employer's name and logo, employee's details (name, employee ID), salary components (basic, allowances, deductions), and pay period.\"{% endif %}{% if aadhaar is not null %}\\n- aadhaar: \"Indian Aadhaar ID. Look for the 'Government of India' and 'Unique Identification Authority of India' logos, the 12-digit Aadhaar number, and demographic information.\"{% endif %}{% if pan is not null %}\\n- pan: \"Indian PAN card issued by the Income Tax Department. Look for the 'Income Tax Department' logo, the term 'Permanent Account Number'. It includes only full_name, father_name, date of birth or date of incorportation, PAN (a 10-character alphanumeric code) and signature\"{% endif %}{% if rcbook is not null %}\\n- rcbook: \"Indian Vehicle Registration Certificate (RC Book). Look for terms like 'Certificate of Registration', vehicle details (registration number, make, model), owner's information, and issuing authority details.\"{% endif %}{% if itr is not null %}\\n- itr: \"Indian Income Tax Return. Look for the heading 'Income Tax Return', the logo of the Income Tax Department, fields like 'PAN', 'Assessment Year', 'Total Income', 'Tax Paid', and schedules related to income and deductions.\"{% endif %}\\n- other: \"If the document cannot be classified into any of the above categories, classify it as other\\\n**Given Document:**,
+                    "fields": {},
+                    "apis": []
+                }
+            }
+        }
+    }
+}
+
+
+Channel configure
+POST call - http://localhost:8080/config/channel
+Request:
+{
+    "channel": "FTAGN",
+    "neevAPIKey": "sk-eyWt57ciD9T-WpbJTfpzPw",
+    "preprocessing": true,
+    "postprocessing": false,
+    "documents": {
+        "AADHAAR": {
+            "operations": {
+                "CLASSIFICATION": {
+                    "fields": null,
+                    "apis": null
+                },
+                "EXTRACTION": {
+                    "fields": {
+                        "redactedAadhaarNo": {
+                            "fieldValidation": [
+                                "REGEX",
+                                "MIN_LENGTH",
+                                "MAX_LENGTH"
+                            ],
+                            "comparisonValidation": [
+                                "EQUALS"
+                            ]
+                        },
+                        "name": {
+                            "fieldValidation": [
+                                "REGEX"
+                            ],
+                            "comparisonValidation": [
+                                "NAME_MATCH"
+                            ]
+                        }
+                    },
+                    "apis": [
+                        "aadhaarValidator"
+                    ]
+                }
+            }
+        }
+    }
+}
+
+Response:
+{
+    "message": "Channel config saved"
+}
+
+Get all channels
+GET call - http://localhost:8080/config/channels
+Response:
+[
+    {
+        "channel": "FTAGN",
+        "neevAPIKey": "sk-eyWt57ciD9T-WpbJTfpzPw",
+        "preprocessing": false,
+        "postprocessing": false,
+        "documents": {
+            "AADHAAR": {
+                "operations": {
+                    "EXTRACTION": {
+                        "fields": {
+                            "name": {
+                                "fieldValidation": [
+                                    "REGEX"
+                                ],
+                                "comparisonValidation": null
+                            },
+                            "redactedAadhaarNo": {
+                                "fieldValidation": [
+                                    "REGEX",
+                                    "MIN_LENGTH",
+                                    "MAX_LENGTH"
+                                ],
+                                "comparisonValidation": null
+                            }
+                        },
+                        "apis": [
+                            "aadhaarValidator"
+                        ]
+                    },
+                    "CLASSIFICATION": {
+                        "fields": {},
+                        "apis": []
+                    }
+                }
+            }
+        }
+    }
+]
+
+
+Get single document – 
+GET call  http://localhost:8080/config/channels/FTAGN, where FTAGN is name of the channel
+
+Response:
+{
+    "channel": "FTAGN",
+    "neevAPIKey": "sk-eyWt57ciD9T-WpbJTfpzPw",
+    "preprocessing": false,
+    "postprocessing": false,
+    "documents": {
+        "AADHAAR": {
+            "operations": {
+                "EXTRACTION": {
+                    "fields": {
+                        "name": {
+                            "fieldValidation": [
+                                "REGEX"
+                            ],
+                            "comparisonValidation": null
+                        },
+                        "redactedAadhaarNo": {
+                            "fieldValidation": [
+                                "REGEX",
+                                "MIN_LENGTH",
+                                "MAX_LENGTH"
+                            ],
+                            "comparisonValidation": null
+                        }
+                    },
+                    "apis": [
+                        "aadhaarValidator"
+                    ]
+                },
+                "CLASSIFICATION": {
+                    "fields": {},
+                    "apis": []
+                }
+            }
+        }
+    }
+}
+
+
+
